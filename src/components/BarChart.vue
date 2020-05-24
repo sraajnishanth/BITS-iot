@@ -37,8 +37,8 @@ export default {
       this.chartdata.datasets = [];
 
       try {
-        for(var i in response.data.items) {
-          var item = response.data.items[i];
+        for(var i in response.data.Items) {
+          var item = response.data.Items[i];
           this.chartdata.labels.push('Car ID : ' + item["CarID"]);
 
           this.chartdata.datasets.push({
@@ -57,10 +57,9 @@ export default {
         console.log(error);
       }
 
-      
-
       this.renderChart(this.chartdata, this.options);
     });
+
   }
 }
 </script>

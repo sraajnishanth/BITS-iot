@@ -4,25 +4,44 @@ import { Line } from 'vue-chartjs';
 export default {
   extends: Line,
   name: 'LineChart',
-  data() {
-    return {
-      // The data for our dataset
-      chartData: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [{
-              label: 'My First dataset',
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: [0, 10, 5, 2, 20, 30, 45]
-          }]
-      },
-
-      chartOptions: {}
+  data: () => ({
+    chartdata: {
+      labels: [],
+      datasets: [
+        {
+          label: 'Speed',
+          backgroundColor: '#f87979',
+          data: []
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
     }
-  },
+  }),
 
   mounted () {
-    this.renderChart(this.chartdata, this.chartOptions);
+    // var api = "https://5z915pi0ce.execute-api.ap-south-1.amazonaws.com/default/GetCarData?ID=c2";
+    var api = "/api/getCarData";
+    this.axios.get(api).then((response) => {
+
+      this.chartdata.labels = [];
+
+      try {
+        for(var i in response.data.Items) {
+          var item = response.data.Items[i];
+          this.chartdata.labels.push(item["EventTime"]);
+          this.chartdata.datasets[0]['data'].push(Number(item["Speed"]));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      this.renderChart(this.chartdata, this.options);
+    });
+
+    // this.renderChart(this.chartdata, this.options);
   }
 }
 </script>

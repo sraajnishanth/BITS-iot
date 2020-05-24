@@ -9,7 +9,7 @@ app.use(express.static('../dist'));
 app.get('/api/getCarData', function (req, res) {
 
     try{
-        var api = "https://f3auomefki.execute-api.ap-south-1.amazonaws.com/default/GetCarData?ID=c2";
+        var api = "https://f3auomefki.execute-api.ap-south-1.amazonaws.com/default/GetCarData?CarID=C1";
         axios.get(api)
                 .then((response) => {
                     res.status(200).send(response.data)
