@@ -36,19 +36,28 @@ export default {
       this.chartdata.labels = [];
       this.chartdata.datasets = [];
 
-      for(var i in response.data) {
-        this.chartdata.labels.push('Car ID : ' +response.data[i]["CarID"]);
-        this.chartdata.datasets.push({
-          label: 'Speed',
-          backgroundColor: '#f87979',
-          data: [Number(response.data[i]["Speed"]), 0]
-        });
-        this.chartdata.datasets.push({
-          label: 'Time',
-          backgroundColor: '#b87977',
-          data: [Number(response.data[i]["Time"]), 0]
-        })
+      try {
+        for(var i in response.data.items) {
+          var item = response.data.items[i];
+          this.chartdata.labels.push('Car ID : ' + item["CarID"]);
+
+          this.chartdata.datasets.push({
+            label: 'Speed',
+            backgroundColor: '#f87979',
+            data: [Number(item["Speed"]), 0]
+          });
+
+          this.chartdata.datasets.push({
+            label: 'Event Time',
+            backgroundColor: '#b87977',
+            data: [Number(item["EventTime"]), 0]
+          })
+        }
+      } catch (error) {
+        console.log(error);
       }
+
+      
 
       this.renderChart(this.chartdata, this.options);
     });
