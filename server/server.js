@@ -9,9 +9,12 @@ app.use(express.static('../dist'));
 app.get('/api/getCarData', function (req, res) {
 
     try{
-        axios.get("https://5z915pi0ce.execute-api.ap-south-1.amazonaws.com/default/GetCarData?ID=c2")
-               .then(data => res.status(200).send(data))
-               .catch(err => res.send(err));
+        var api = "https://f3auomefki.execute-api.ap-south-1.amazonaws.com/default/GetCarData?ID=c2";
+        axios.get(api)
+                .then((response) => {
+                    res.status(200).send(response.data)
+                })
+                .catch(err => res.send(err));
      }
      catch(err){
         console.error("GG", err);
@@ -26,5 +29,5 @@ app.get('/api/getCarData', function (req, res) {
 // });
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Group-12 OBD app listening on port 3000!');
 });
