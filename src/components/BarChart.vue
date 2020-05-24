@@ -27,7 +27,13 @@ export default {
   }),
 
   mounted () {
-    this.renderChart(this.chartdata, this.options)
+    this.renderChart(this.chartdata, this.options);
+
+    // var api = "https://5z915pi0ce.execute-api.ap-south-1.amazonaws.com/default/GetCarData?ID=c2";
+    var api = "/api/getCarData";
+    this.axios.get(api).then((response) => {
+      console.log(response.data);
+    });
   }
 }
 </script>
